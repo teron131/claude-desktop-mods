@@ -1,0 +1,6 @@
+.DS_Store
+.cache/
+
+# Claude Code's plugin API declarations: a local copy for tsc, and the copies Claude Code writes beside each mod it loads from this folder
+node_modules/
+plugins/*/.claude-plugin/types/

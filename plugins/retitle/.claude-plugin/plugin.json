@@ -1,0 +1,5 @@
+{
+  "name": "retitle",
+  "version": "0.1.0",
+  "description": "Lets the model own a desktop session's title, naming it on the first prompt and renaming it when the user's recent requests move past it, without the app's approval card"
+}

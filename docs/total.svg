@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="462" viewBox="0 0 960 462" role="img" aria-labelledby="title desc">
+  <title id="title">Total</title>
+  <desc id="desc">A turn line reading &quot;Worked for 1m 42s · 412k (96%) in · 7k out · 74 tps · $0.35&quot; with each figure explained, and the footer reading &quot;Total 38m 15s · 6.12M (97%) in · 96k out · 79 tps · $4.78&quot;.</desc>
+  <style>text { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Helvetica, Arial, sans-serif; }</style>
+  <rect width="960" height="462" rx="16" fill="#181818"/>
+  <rect x="48.0" y="44.0" width="600.0" height="9.0" rx="4.5" fill="#575757"/>
+  <rect x="48.0" y="68.0" width="420.0" height="9.0" rx="4.5" fill="#575757"/>
+  <text x="48.0" y="109.0" font-size="13" fill="#9a9a9a">Worked for 1m 42s · 412k (96%) in · 7k out · 74 tps · $0.35</text>
+  <line x1="48.0" y1="117.0" x2="409.0" y2="117.0" stroke="#D97757" stroke-width="1" stroke-linecap="round"/>
+  <line x1="66.0" y1="117.0" x2="66.0" y2="131.0" stroke="#D97757" stroke-width="1" stroke-linecap="round"/>
+  <rect x="48.0" y="131.0" width="493.2" height="136.0" rx="10" fill="none" stroke="#D97757" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="66.0" y="157.0" font-size="13" fill="#D97757">Worked for 1m 42s</text>
+  <text x="214.8" y="157.0" font-size="12.5" fill="#bdbdbd">how long the turn worked</text>
+  <text x="66.0" y="181.0" font-size="13" fill="#D97757">412k (96%) in</text>
+  <text x="214.8" y="181.0" font-size="12.5" fill="#bdbdbd">prompt tokens sent, and the share the cache served</text>
+  <text x="66.0" y="205.0" font-size="13" fill="#D97757">7k out</text>
+  <text x="214.8" y="205.0" font-size="12.5" fill="#bdbdbd">tokens generated</text>
+  <text x="66.0" y="229.0" font-size="13" fill="#D97757">74 tps</text>
+  <text x="214.8" y="229.0" font-size="12.5" fill="#bdbdbd">output tokens per second of request time</text>
+  <text x="66.0" y="253.0" font-size="13" fill="#D97757">$0.35</text>
+  <text x="214.8" y="253.0" font-size="12.5" fill="#bdbdbd">API-equivalent cost, subagents included</text>
+  <rect x="28.0" y="307.0" width="901.0" height="42.0" rx="15" fill="#303030" stroke="#404040" stroke-width="1"/>
+  <path d="M43.0 328.0 h11.5 M48.8 322.2 v11.5" stroke="#efefef" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="72.0" y="333.3" font-size="15" fill="#8a8a8a">⏎ to send, ⌘⏎ to queue for later</text>
+  <g fill="none" stroke="#efefef" stroke-width="1.5" stroke-linecap="round"><rect x="904.8" y="320.5" width="6.5" height="9.5" rx="3.25"/><path d="M902.5 327.0 a5.5 5.5 0 0 0 11 0"/><line x1="908.0" y1="332.5" x2="908.0" y2="335.5"/></g>
+  <text x="44.0" y="373.5" font-size="12.5" fill="#efefef">Auto</text>
+  <circle cx="911.0" cy="369.0" r="6.5" fill="none" stroke="#464646" stroke-width="2"/>
+  <circle cx="911.0" cy="369.0" r="6.5" fill="none" stroke="#2c7ad2" stroke-width="2" stroke-dasharray="11 40" transform="rotate(-90 911.0 369.0)"/>
+  <text x="884.5" y="373.5" font-size="12.5" fill="#b5b5b5" text-anchor="end">Max</text>
+  <text x="850.2" y="373.5" font-size="12.5" fill="#efefef" text-anchor="end">Opus 5.5</text>
+  <text x="781.2" y="373.5" font-size="13" fill="#9a9a9a" text-anchor="end">38m 15s · 6.12M (97%) in · 96k out · 79 tps · $4.78</text>
+  <text x="458.5" y="373.5" font-size="10.5" fill="#8e8e8e" text-anchor="end">Total</text>
+  <line x1="469.0" y1="383.5" x2="781.2" y2="383.5" stroke="#D97757" stroke-width="1" stroke-linecap="round"/>
+  <line x1="469.0" y1="383.5" x2="469.0" y2="397.5" stroke="#D97757" stroke-width="1" stroke-linecap="round"/>
+  <text x="475.0" y="411.5" font-size="12.5" fill="#bdbdbd">The whole session: every turn, through its rewinds</text>
+  <text x="475.0" y="430.5" font-size="12.5" fill="#bdbdbd">and forks, and its cost as /cost totals it</text>
+</svg>

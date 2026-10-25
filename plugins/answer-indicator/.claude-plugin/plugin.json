@@ -1,0 +1,5 @@
+{
+  "name": "answer-indicator",
+  "version": "0.1.0",
+  "description": "Draws an accent rail down the side of each turn's final answer in the desktop transcript, so answers are easy to spot while scrolling"
+}

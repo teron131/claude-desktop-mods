@@ -1,0 +1,5 @@
+{
+  "name": "Total",
+  "version": "0.1.0",
+  "description": "Writes how long each turn worked, its tokens, cache share, output speed and API-equivalent cost under its final answer in the desktop transcript, past turns included, and the session's sum as a status line under the prompt; on macOS it frees the process of a session you've left when the app is at its session limit, so the one you open starts at once"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "subagent-models",
+  "version": "0.1.0",
+  "description": "Pins the model and effort of Claude Code's built-in subagents while keeping their own prompts",
+  "userConfig": {
+    "explore_model": {
+      "type": "string",
+      "title": "Explore model",
+      "description": "Model the built-in Explore subagent runs on",
+      "required": true,
+      "options": ["haiku", "sonnet", "opus", "fable"]
+    },
+    "explore_effort": {
+      "type": "string",
+      "title": "Explore effort",
+      "description": "Reasoning effort for each Explore request",
+      "required": true,
+      "options": ["low", "medium", "high", "xhigh", "max"]
+    },
+    "general_purpose_model": {
+      "type": "string",
+      "title": "General-purpose model",
+      "description": "Model the built-in general-purpose subagent runs on",
+      "required": true,
+      "options": ["haiku", "sonnet", "opus", "fable"]
+    },
+    "general_purpose_effort": {
+      "type": "string",
+      "title": "General-purpose effort",
+      "description": "Reasoning effort for each general-purpose request",
+      "required": true,
+      "options": ["low", "medium", "high", "xhigh", "max"]
+    }
+  }
+}
