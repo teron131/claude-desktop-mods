@@ -92,6 +92,10 @@ type Reading = {
 // Usd is undefined for a turn whose spend Total never measured.
 type Turn = Figures & { start: number; usd: number | undefined };
 
+// The app writes a rewind's record several seconds after the new process starts, so a read that finds no record is redone this often, for this long.
+const RELINK_MS = 2_000;
+const RELINK_FOR_MS = 30_000;
+
 const NO_TOKENS: Tokens = { input: 0, cached: 0, output: 0 };
 const NO_PACE: Pace = { output: 0, ms: 0 };
 
@@ -105,9 +109,27 @@ export const register: Register = (on) => {
   const spendAtStart = new Map<string, number>();
 
   // The app draws a reopened session's history before the figures arrive, so they are read at start and shown again once read.
+  // A rewind starts a process whose transcript the app's record names only seconds later, and that transcript copies the answers without the prompts that started their turns, so a read that finds no record counts no turns and is redone until the record appears.
   on("session.start", async ($, e, next) => {
-    const shown = (reading ??= readTurns($)).then(({ turns }) => show($, turns));
-    const [started] = await Promise.all([next(e), shown]);
+    const first = (reading ??= readTurns($));
+    const [started] = await Promise.all([next(e), first.then(({ turns }) => show($, turns))]);
+    if ((await first).isLinked) return started;
+    const startedAt = await $.clock.now();
+    const relinking = $.clock.every(RELINK_MS, () => {
+      const read = readTurns($);
+      read.then(
+        async ({ turns, isLinked }) => {
+          if (!isLinked && (await $.clock.now()) - startedAt < RELINK_FOR_MS) return;
+          relinking.cancel();
+          reading = read;
+          await show($, turns);
+        },
+        (error: unknown) => {
+          relinking.cancel();
+          $.ui.log(`Total: ${String(error)}`, { to: "debug" });
+        },
+      );
+    });
 
     return started;
   });
@@ -120,7 +142,7 @@ export const register: Register = (on) => {
     return attached;
   });
 
-  // The app's record can name a session's transcript only after the session starts, as for a new session, so a read made before then is repeated as each turn starts.
+  // A record still missing once the start's retries end, as for a new session left idle, is looked for again as each turn starts.
   on("turn.start", async ($, e, next) => {
     if (e.agentId !== undefined) return next(e);
     const { cost } = await $.session.usage();
