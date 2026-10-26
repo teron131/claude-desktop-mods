@@ -70,7 +70,7 @@ Gives the session's title to the main agent, so the title follows the work.
 
 Sets the model and effort of Claude Code's [built-in subagents](https://code.claude.com/docs/en/sub-agents#built-in-subagents), `Explore` and `general-purpose`, while keeping their built-in instructions, which a subagent of your own with the same name would replace.
 
-![The mod's settings give Explore Sonnet at high effort and general-purpose Opus at high effort, and an Explore call that names Haiku runs on Haiku](docs/subagent-models.svg)
+![The mod's settings give Explore Sonnet at high effort and general-purpose Opus at high effort, and an Explore call that names Haiku still runs on Sonnet](docs/subagent-models.svg)
 
-- A model or effort named on the Agent call still wins.
+- Your settings apply to every run, even when the main agent's Agent call names another model or effort.
 - The options live in settings.json under `pluginConfigs`, and `/config` in a terminal session changes them.

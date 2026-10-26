@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="366" viewBox="0 0 960 366" role="img" aria-labelledby="title desc">
   <title id="title">subagent-models</title>
-  <desc id="desc">The mod&#x27;s four settings give Explore Sonnet at high effort and general-purpose Opus at high effort; a model named on the Agent call wins.</desc>
+  <desc id="desc">The mod&#x27;s four settings give Explore Sonnet at high effort and general-purpose Opus at high effort, even when the Agent call names another model.</desc>
   <style>text { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Helvetica, Arial, sans-serif; }</style>
   <rect width="960" height="366" rx="16" fill="#181818"/>
   <rect x="48.0" y="40.0" width="300.0" height="196.0" rx="14" fill="#1f1f1f" stroke="#2e2e2e" stroke-width="1"/>
@@ -38,8 +38,9 @@
   <text x="420.0" y="243.0" font-size="15" fill="#d6d6d6" font-weight="500">Explore</text>
   <rect x="484.5" y="234.0" width="230.0" height="9.0" rx="4.5" fill="#3c3c3c"/>
   <path d="M722.5 236.0 l3.5 2.75 l-3.5 2.75 z" fill="#9c9c9c"/>
-  <rect x="420.0" y="256.0" width="127.5" height="22.0" rx="11" fill="none" stroke="#D97757" stroke-width="1" stroke-dasharray="4 3"/>
-  <text x="483.8" y="271.5" font-size="12.5" fill="#D97757" font-weight="500" text-anchor="middle">Haiku · high effort</text>
-  <text x="420.0" y="298.0" font-size="13" fill="#bdbdbd">The Agent call asked for Haiku, and a model or effort it names wins.</text>
+  <rect x="420.0" y="256.0" width="136.0" height="22.0" rx="11" fill="none" stroke="#D97757" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="488.0" y="271.5" font-size="12.5" fill="#D97757" font-weight="500" text-anchor="middle">Sonnet · high effort</text>
+  <path d="M354.0 122.0 C388.0 122.0 380.0 267.0 414.0 267.0" fill="none" stroke="#5a5a5a" stroke-width="1"/>
+  <text x="420.0" y="298.0" font-size="13" fill="#bdbdbd">The Agent call asked for Haiku, but your settings still apply.</text>
   <text x="48.0" y="333.0" font-size="13" fill="#bdbdbd">Both keep Claude Code’s built-in instructions, which a subagent of your own with the same name would replace.</text>
 </svg>
