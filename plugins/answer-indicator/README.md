@@ -9,7 +9,7 @@ Works in the Code tab of the Claude desktop app.
 ## What it reads and runs
 
 - It finds past answers in the transcripts Claude Code keeps under `~/.claude/projects`, and follows a rewound session to its earlier transcripts through the desktop app's session records.
-- It searches them with ripgrep: Claude Code's built-in copy on macOS and Linux, and an installed `rg` on Windows.
+- It searches them with Claude Code's built-in ripgrep, so nothing needs installing; on Windows, PowerShell finds Claude Code's binary for it.
 - It writes nothing and sends nothing off your machine.
 
 ## Install

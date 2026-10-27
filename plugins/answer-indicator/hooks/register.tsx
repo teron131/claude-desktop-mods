@@ -14,12 +14,15 @@ const RAIL_WIDTH = 0.25;
 // Claude Code's binary runs as its embedded ripgrep when started as rg, and the mod's commands are its children: Linux finds the parent's executable under /proc, macOS through ps.
 const EMBEDDED_RIPGREP =
   'exe=/proc/$PPID/exe; [ -e "$exe" ] || exe=$(ps -o comm= -p "$PPID"); exec -a rg "$exe" "$@"';
+// Windows finds it through PowerShell, which prints it in UTF-8 so a path outside the console's code page arrives whole.
+const PARENT_EXECUTABLE =
+  "[Console]::OutputEncoding = [Text.Encoding]::UTF8; (Get-Process -Id (Get-CimInstance Win32_Process -Filter ProcessId=$PID).ParentProcessId).Path";
 
 type System = {
   home: string;
   desktopData: string;
   // Starts ripgrep without user config, which could change its output.
-  ripgrep: readonly string[];
+  ripgrep: { argv: readonly string[]; env: Record<string, string> };
 };
 
 // Whether the app's record already named the session's current transcript when the answers were read.
@@ -79,15 +82,18 @@ export const register: Register = (on) => {
   });
 };
 
+// Looked up once per load, since on Windows that starts PowerShell.
+let systemLookup: Promise<System> | undefined;
+
 async function readAnswers($: EngineInterface): Promise<Reading> {
-  const system = await readSystem($);
+  const system = await (systemLookup ??= readSystem($));
   const sessionId = await $.session.id();
   const prior = await priorTranscriptIds($, system, sessionId);
   const transcriptIds = [...(prior ?? []), sessionId];
   // `$.fs.read` and `$.process.run` stop at 4 MiB, which a session's answer records alone can pass, so rg's matches stream in.
   const search = $.process.spawn({
     argv: [
-      ...system.ripgrep,
+      ...system.ripgrep.argv,
       "--no-filename",
       "--no-line-number",
       "--fixed-strings",
@@ -96,6 +102,7 @@ async function readAnswers($: EngineInterface): Promise<Reading> {
       `"stop_reason":"end_turn"`,
       `${system.home}/.claude/projects`,
     ],
+    env: system.ripgrep.env,
   });
   let records = "";
   let errors = "";
@@ -133,19 +140,22 @@ async function priorTranscriptIds(
   // Only the desktop app keeps session records; a terminal session has no earlier transcripts.
   if ((await $.env.get("CLAUDE_CODE_ENTRYPOINT")) !== "claude-desktop") return [];
   const records = `${system.desktopData}/claude-code-sessions`;
-  const { exitCode, stdout, stderr } = await $.process.run([
-    ...system.ripgrep,
-    "--files-with-matches",
-    "--fixed-strings",
-    "--glob",
-    "local_*.json",
-    "--regexp",
-    `"cliSessionId":"${sessionId}"`,
-    // A rewind's edge names its new transcript before the session starts, while cliSessionId moves to it only after.
-    "--regexp",
-    `"child":"${sessionId}"`,
-    records,
-  ]);
+  const { exitCode, stdout, stderr } = await $.process.run(
+    [
+      ...system.ripgrep.argv,
+      "--files-with-matches",
+      "--fixed-strings",
+      "--glob",
+      "local_*.json",
+      "--regexp",
+      `"cliSessionId":"${sessionId}"`,
+      // A rewind's edge names its new transcript before the session starts, while cliSessionId moves to it only after.
+      "--regexp",
+      `"child":"${sessionId}"`,
+      records,
+    ],
+    { env: system.ripgrep.env },
+  );
   if (exitCode > 1) throw new Error(`answer-indicator: rg failed: ${stderr}`);
   // Undefined until the app records the session's current transcript.
   const path = stdout.trimEnd();
@@ -164,11 +174,23 @@ async function priorTranscriptIds(
 async function readSystem($: EngineInterface): Promise<System> {
   if ((await $.env.get("OS")) === "Windows_NT") {
     const home = await $.env.get("USERPROFILE");
-    const appData = await $.env.get("APPDATA");
-    if (home === undefined || appData === undefined)
-      throw new Error("answer-indicator: USERPROFILE or APPDATA is unset");
-    // Starting the binary as rg takes a spawn option mods lack or a POSIX shell, so Windows uses an installed rg.
-    return { home, desktopData: `${appData}/Claude`, ripgrep: ["rg", "--no-config"] };
+    if (home === undefined) throw new Error("answer-indicator: USERPROFILE is unset");
+    const { exitCode, stdout, stderr } = await $.process.run([
+      "powershell.exe",
+      "-NoProfile",
+      "-NonInteractive",
+      "-Command",
+      PARENT_EXECUTABLE,
+    ]);
+    if (exitCode !== 0) throw new Error(`answer-indicator: finding Claude Code failed: ${stderr}`);
+    const binary = stdout.trim();
+    return {
+      home,
+      // The app's data folder, which holds the session records, also holds the Claude Code it runs, under claude-code; a terminal session runs one from elsewhere and never reads them.
+      desktopData: binary.slice(0, binary.lastIndexOf("\\claude-code\\")),
+      // Windows has no exec -a, but there the binary takes the name it runs under from ARGV0.
+      ripgrep: { argv: [binary, "--no-config"], env: { ARGV0: "rg" } },
+    };
   }
   const home = await $.env.get("HOME");
   if (home === undefined) throw new Error("answer-indicator: HOME is unset");
@@ -179,6 +201,6 @@ async function readSystem($: EngineInterface): Promise<System> {
       kernel.trim() === "Darwin"
         ? `${home}/Library/Application Support/Claude`
         : `${home}/.config/Claude`,
-    ripgrep: ["/bin/bash", "-c", EMBEDDED_RIPGREP, "rg", "--no-config"],
+    ripgrep: { argv: ["/bin/bash", "-c", EMBEDDED_RIPGREP, "rg", "--no-config"], env: {} },
   };
 }

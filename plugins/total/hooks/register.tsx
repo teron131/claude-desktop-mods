@@ -17,6 +17,9 @@ import { registerMakeRoom } from "./make-room";
 // Claude Code's binary runs as its embedded ripgrep when started as rg, and the mod's commands are its children: Linux finds the parent's executable under /proc, macOS through ps.
 const EMBEDDED_RIPGREP =
   'exe=/proc/$PPID/exe; [ -e "$exe" ] || exe=$(ps -o comm= -p "$PPID"); exec -a rg "$exe" "$@"';
+// Windows finds it through PowerShell, which prints it in UTF-8 so a path outside the console's code page arrives whole.
+const PARENT_EXECUTABLE =
+  "[Console]::OutputEncoding = [Text.Encoding]::UTF8; (Get-Process -Id (Get-CimInstance Win32_Process -Filter ProcessId=$PID).ParentProcessId).Path";
 
 // Only the fields a tally reads, since whole records reach tens of megabytes in a long session.
 // Each is matched by its own key because key order differs between records, as between one response's usage and another's.
@@ -31,7 +34,7 @@ type System = {
   home: string;
   desktopData: string;
   // Starts ripgrep without user config, which could change its output.
-  ripgrep: readonly string[];
+  ripgrep: { argv: readonly string[]; env: Record<string, string> };
 };
 
 type UsageCounts = Pick<
@@ -221,8 +224,11 @@ async function show($: EngineInterface, turns: readonly Turn[]): Promise<void> {
   $.ui.status(formatFigures(sumTurns(turns), cost?.usd));
 }
 
+// Looked up once per load, since on Windows that starts PowerShell.
+let systemLookup: Promise<System> | undefined;
+
 async function readTurns($: EngineInterface): Promise<Reading> {
-  const system = await readSystem($);
+  const system = await (systemLookup ??= readSystem($));
   const sessionId = await $.session.id();
   const lineage = await readLineage($, system, sessionId);
   const { earlier, ancestors } = lineage ?? { earlier: [], ancestors: [] };
@@ -365,11 +371,12 @@ async function searchTranscripts(
 ): Promise<string> {
   const rg = $.process.spawn({
     argv: [
-      ...system.ripgrep,
+      ...system.ripgrep.argv,
       ...transcriptIds.flatMap((id) => ["--glob", `${id}.jsonl`]),
       ...search,
       `${system.home}/.claude/projects`,
     ],
+    env: system.ripgrep.env,
   });
   let found = "";
   let errors = "";
@@ -487,7 +494,9 @@ async function findSessionRecord(
   system: System,
   search: readonly string[],
 ): Promise<SessionRecord | undefined> {
-  const { exitCode, stdout, stderr } = await $.process.run([...system.ripgrep, ...search]);
+  const { exitCode, stdout, stderr } = await $.process.run([...system.ripgrep.argv, ...search], {
+    env: system.ripgrep.env,
+  });
   if (exitCode > 1) throw new Error(`Total: rg failed: ${stderr}`);
   const path = stdout.trimEnd();
 
@@ -498,11 +507,23 @@ async function findSessionRecord(
 async function readSystem($: EngineInterface): Promise<System> {
   if ((await $.env.get("OS")) === "Windows_NT") {
     const home = await $.env.get("USERPROFILE");
-    const appData = await $.env.get("APPDATA");
-    if (home === undefined || appData === undefined)
-      throw new Error("Total: USERPROFILE or APPDATA is unset");
-    // Starting the binary as rg takes a spawn option mods lack or a POSIX shell, so Windows uses an installed rg.
-    return { home, desktopData: `${appData}/Claude`, ripgrep: ["rg", "--no-config"] };
+    if (home === undefined) throw new Error("Total: USERPROFILE is unset");
+    const { exitCode, stdout, stderr } = await $.process.run([
+      "powershell.exe",
+      "-NoProfile",
+      "-NonInteractive",
+      "-Command",
+      PARENT_EXECUTABLE,
+    ]);
+    if (exitCode !== 0) throw new Error(`Total: finding Claude Code failed: ${stderr}`);
+    const binary = stdout.trim();
+    return {
+      home,
+      // The app's data folder, which holds the session records, also holds the Claude Code it runs, under claude-code; a terminal session runs one from elsewhere and never reads them.
+      desktopData: binary.slice(0, binary.lastIndexOf("\\claude-code\\")),
+      // Windows has no exec -a, but there the binary takes the name it runs under from ARGV0.
+      ripgrep: { argv: [binary, "--no-config"], env: { ARGV0: "rg" } },
+    };
   }
   const home = await $.env.get("HOME");
   if (home === undefined) throw new Error("Total: HOME is unset");
@@ -513,7 +534,7 @@ async function readSystem($: EngineInterface): Promise<System> {
       kernel.trim() === "Darwin"
         ? `${home}/Library/Application Support/Claude`
         : `${home}/.config/Claude`,
-    ripgrep: ["/bin/bash", "-c", EMBEDDED_RIPGREP, "rg", "--no-config"],
+    ripgrep: { argv: ["/bin/bash", "-c", EMBEDDED_RIPGREP, "rg", "--no-config"], env: {} },
   };
 }
 

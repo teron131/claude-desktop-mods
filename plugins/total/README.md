@@ -18,7 +18,7 @@ So `Total` ends the process of a session you've clicked away from, and only if n
 
 ## What it reads, writes and runs
 
-- It reads the transcripts Claude Code keeps under `~/.claude/projects` and the desktop app's session records, with ripgrep: Claude Code's built-in copy on macOS and Linux, and an installed `rg` on Windows.
+- It reads the transcripts Claude Code keeps under `~/.claude/projects` and the desktop app's session records with Claude Code's built-in ripgrep, so nothing needs installing; on Windows, PowerShell finds Claude Code's binary for it.
 - It saves each turn's cost in `~/.claude/total-costs`, one small file per transcript.
 - On macOS, to free a session's process, it counts Claude Code processes with `ps`, reads the machine's memory size with `sysctl`, asks the desktop app whether the session is running or reachable through Remote Control, and ends that session's own Claude Code process with `kill -TERM`. Two small files in `~/.claude`, `total-released` and `total-young-releases`, keep sessions from releasing more than one process at a time or more than the crash limit allows.
 - It sends nothing off your machine.
