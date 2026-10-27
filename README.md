@@ -4,7 +4,7 @@ Mods for the Code tab of the Claude desktop app: Claude Code plugins that change
 
 They're made to share, so clone them and have your Claude customize them to how you work.
 
-![A desktop session where the final answer has an orange rail and a "Worked for 4m 17s · 8.17M (99%) in · 23k out · 92 tps · $3.10" line, and the footer reads "Total 20h 51m 9s · 1.73B (99%) in · 5.90M out · 98 tps · $702.46"](docs/screenshot.png)
+![A desktop session where the final answer has an orange rail and a "Worked for 1m 58s · 3.73M (100%) in · 7k out · 91 tps · $0.98" line, and the footer reads "Total 32h 53m 11s · 2.63B (99%) in · 8.73M out · 98 tps · $1054.27"](docs/screenshot.svg)
 
 The orange rail marks the final answer (`answer-indicator`); the line under it and the footer's Total are `Total`'s figures.
 

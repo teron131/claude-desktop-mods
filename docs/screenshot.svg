@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="967" height="928" viewBox="0 0 967 928" role="img" aria-labelledby="title desc">
+  <title id="title">Claude desktop session with answer-indicator and Total</title>
+  <desc id="desc">A desktop session where the final answer has an orange rail and a &quot;Worked for 1m 58s · 3.73M (100%) in · 7k out · 91 tps · $0.98&quot; line, and the footer reads &quot;Total 32h 53m 11s · 2.63B (99%) in · 8.73M out · 98 tps · $1054.27&quot;.</desc>
+  <defs>
+    <linearGradient id="shimmer" gradientUnits="userSpaceOnUse" x1="-8" y1="0" x2="168" y2="0">
+      <stop offset="0" stop-color="#9d9d9d"/>
+      <stop offset="0.5" stop-color="#f1f1f1"/>
+      <stop offset="1" stop-color="#9d9d9d"/>
+    </linearGradient>
+  </defs>
+  <style>
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    .prose { font-size: 15px; font-variation-settings: "opsz" 20; }
+    .row { font-size: 14.65px; font-variation-settings: "opsz" 19; }
+    .ui { font-size: 14.5px; }
+    .figures { font-size: 11.625px; font-variation-settings: "opsz" 18; font-variant-numeric: tabular-nums; }
+    .code { font-family: Menlo, ui-monospace, monospace; font-size: 13px; }
+    .auto { font-size: 13.125px; font-variation-settings: "opsz" 20; }
+    .label { font-size: 10.75px; }
+    .total { font-size: 12.5px; }
+    .model { font-size: 12.75px; font-variation-settings: "opsz" 19; }
+    .arrow { fill: #9d9d9d; stroke: #9d9d9d; stroke-width: 0.6; stroke-linejoin: round; }
+  </style>
+  <rect width="967" height="928" fill="#181818"/>
+  <text class="row" x="39.02" y="23.50" textLength="166.56" fill="url(#shimmer)">Draft merged session log</text>
+  <path class="arrow" d="M213.96 16.27L216.96 18.42L213.96 20.57Z"/>
+  <text class="prose" x="38.89" y="62.00" textLength="795.69" fill="#f1f1f1">While the agent drafts, I’m checking whether the design doc’s per-figure motion and embed mechanics already sit in the</text>
+  <text class="prose" x="38.79" y="85.50" textLength="525.20" fill="#f1f1f1">components’ own comments. If they do, the design doc can keep just the rules.</text>
+  <text class="row" x="38.99" y="124.00" textLength="114.98" fill="#9d9d9d">Ran 2 commands</text>
+  <path class="arrow" d="M162.35 117.08L165.35 119.23L162.35 121.38Z"/>
+  <text class="prose" x="38.95" y="163.00" textLength="803.90" fill="#f1f1f1">The embed’s mechanics and per-figure choreography are already documented in code comments, so the design doc only</text>
+  <text class="prose" x="38.81" y="186.00" textLength="820.75" fill="#f1f1f1">needs motion and interaction rules. Next, I’ll check the claims doc to confirm it covers each figure’s inventive aspects before</text>
+  <text class="prose" x="39.03" y="209.50" textLength="229.93" fill="#f1f1f1">trimming that from the design doc.</text>
+  <text class="row" x="38.98" y="248.00" textLength="114.98" fill="#9d9d9d">Ran 2 commands</text>
+  <path class="arrow" d="M162.36 241.14L165.36 243.29L162.36 245.44Z"/>
+  <text class="prose" x="39.29" y="287.00" textLength="808.52" fill="#f1f1f1">I’ll check the screenshots folder referenced in the context doc before updating its list of local material, since the per-figure</text>
+  <text class="prose" x="38.94" y="310.50" textLength="463.86" fill="#f1f1f1">invented/real details already exist in the claims doc and chapter notes.</text>
+  <text class="row" x="38.98" y="349.00" textLength="382.68" fill="#9d9d9d">Saw what the local screenshots and sketches folders hold</text>
+  <path class="arrow" d="M430.09 341.93L433.09 344.08L430.09 346.23Z"/>
+  <rect x="68.25" y="374.55" width="102.25" height="16.9" rx="3.5" fill="#2a2a2a"/>
+  <text class="prose" x="38.97" y="388.00" textLength="25.62" fill="#f1f1f1">The</text>
+  <text class="code" x="72.53" y="387.50" textLength="93.92" fill="#f1f1f1">screenshots/</text>
+  <text class="prose" x="174.58" y="388.00" textLength="679.05" fill="#f1f1f1">folder actually contains ad-hoc review shots from many sessions, not just the first build, so the context</text>
+  <text class="prose" x="39.31" y="411.00" textLength="762.56" fill="#f1f1f1">doc’s reference is outdated. I’ll apply the design and context edits now, leaving the session log for the agent’s draft.</text>
+  <text class="row" x="39.07" y="450.00" textLength="570.96" fill="#9d9d9d">Cut the design doc to its rules, refresh the local-material list, and archived the old plan</text>
+  <path class="arrow" d="M618.44 442.76L621.44 444.91L618.44 447.06Z"/>
+  <text class="prose" x="38.74" y="488.50" textLength="840.57" fill="#f1f1f1">Design doc and context updated, and the old plan is archived. While the agent finishes the log draft, I’m rereading the rewritten</text>
+  <text class="prose" x="38.96" y="512.00" textLength="108.36" fill="#f1f1f1">design sections.</text>
+  <text class="row" x="39.06" y="550.50" textLength="393.89" fill="#9d9d9d">Reread the rewritten motion, interaction and figure sections</text>
+  <path class="arrow" d="M441.33 543.55L444.33 545.70L441.33 547.85Z"/>
+  <rect x="35.1" y="572.3" width="2.7" height="70.87" fill="#da7858"/>
+  <text class="prose" x="52.77" y="589.50" textLength="802.61" fill="#f1f1f1">The design doc and context updates are done, and I’m waiting on the agent’s draft of the merged session log. I’ll review it</text>
+  <text class="prose" x="52.77" y="612.50" textLength="334.69" fill="#f1f1f1">against the current docs before it replaces the log.</text>
+  <text class="figures" x="49.25" y="639.00" textLength="341.31" fill="#9d9d9d">Worked for 1m 58s · 3.73M (100%) in · 7k out · 91 tps · $0.98</text>
+  <rect x="851.75" y="697.4" width="83.3" height="46.5" rx="12.5" fill="#242424"/>
+  <text class="ui" x="867.10" y="726.00" textLength="52.55" fill="#f1f1f1">Thanks!</text>
+  <g fill="#da7858"><circle cx="43.18" cy="789.57" r="1.37"/><circle cx="53.32" cy="788.98" r="1.3"/><circle cx="50.09" cy="794.27" r="1.91"/></g>
+  <text class="ui" x="70.43" y="795.50" textLength="15.97" fill="#9d9d9d">2s</text>
+  <text class="ui" x="94.17" y="796.00" textLength="4.12" fill="#9d9d9d">·</text>
+  <text class="ui" x="105.95" y="796.00" textLength="57.00" fill="#9d9d9d">Thinking</text>
+  <rect x="15" y="848.5" width="940" height="54" rx="20" fill="#171717"/>
+  <rect x="20.23" y="850.54" width="929.82" height="42.16" rx="13" fill="#303030" stroke="#404040" stroke-width="1"/>
+  <g transform="translate(41.04 871.86)" stroke="#efefef" stroke-width="1.1" stroke-linecap="round"><path d="M-5.6 0H5.6M0 -5.6V5.6"/></g>
+  <text class="ui" x="62.41" y="877.00" textLength="221.15" fill="#888888">⏎ to send, ⌘⏎ to queue for later</text>
+  <g transform="translate(894.32 871.86)" fill="#efefef"><rect x="-5.8" y="-5.78" width="11.6" height="11.55" rx="2.8"/></g>
+  <g transform="translate(929.23 870.35)" fill="none" stroke="#efefef" stroke-width="1.15"><rect x="-3.2" y="-5.6" width="6.4" height="9" rx="3.2"/><path d="M-6.3 -0.4V0.05A6.3 6.3 0 0 0 6.3 0.05V-0.4M-0.45 6.35V9.2"/></g>
+  <text class="auto" x="35.05" y="917.50" textLength="27.59" fill="#efefef">Auto</text>
+  <text class="label" x="401.73" y="917.00" textLength="25.09" fill="#999999">Total</text>
+  <text class="total" x="434.33" y="917.00" textLength="357.12" fill="#9d9d9d">32h 53m 11s · 2.63B (99%) in · 8.73M out · 98 tps · $1054.27</text>
+  <text class="model" x="806.53" y="917.50" textLength="53.17" fill="#efefef">Opus 5.5</text>
+  <text class="model" x="866.92" y="917.50" textLength="24.52" fill="#9d9d9d">Max</text>
+  <g transform="translate(901.09 912.62)" fill="none" stroke="#d5ab56" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M-1.73 -2.35Q0 -5.25 1.73 -2.35L5.3 3.7H-5.3ZM0 -1.3V-0.2"/><circle cy="1.6" r="0.8" fill="#d5ab56" stroke="none"/></g>
+  <g transform="translate(929.22 912.55)" fill="none" stroke-width="2"><circle r="5.75" stroke="#474747"/><circle r="5.75" stroke="#2c7ad2" stroke-dasharray="10.8 40" transform="rotate(-95)"/></g>
+</svg>
