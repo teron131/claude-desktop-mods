@@ -1,7 +1,7 @@
 /**
- * Draws an accent rail beside each turn's final answer in the desktop transcript, past turns included, so an answer stands out from any part of it while scrolling; only the drawing changes, never the transcript.
+ * Draws an accent rail beside each final answer in the desktop transcript, past turns included, so an answer stands out from any part of it while scrolling; only the drawing changes, never the transcript.
  *
- * A drawn message carries no turn position, so answers are known by text: past ones read from the session's transcripts once per load, each later one taken from its turn's end.
+ * A drawn message carries no turn position, so answers are known by text: past ones read from the session's transcripts once per load, each later one taken as its response ends.
  */
 
 import type { EngineInterface, Register } from "claude-code";
@@ -54,13 +54,14 @@ export const register: Register = (on) => {
     return started;
   });
 
-  on("turn.complete", async ($, e, next) => {
-    if (e.agentId === undefined) {
-      (await (reading ??= readAnswers($))).answers.add(e.answer.trim());
-      $.ui.invalidate("ui.render");
-    }
+  // Each main-conversation response that ends with end_turn is an answer, as in the transcripts, while `turn.complete` carries only a turn's last: a Stop hook that sends a turn back to work leaves one before it.
+  on("turn.step", async function* ($, e, next) {
+    const step = yield* next(e);
+    if (e.agentId !== undefined || step.stopReason !== "end_turn") return step;
+    (await (reading ??= readAnswers($))).answers.add(step.answer.trim());
+    $.ui.invalidate("ui.render");
 
-    return next(e);
+    return step;
   });
 
   on("ui.render", { component: "AssistantMessage", surface: "desktop" }, async ($, e, next) => {
@@ -70,11 +71,19 @@ export const register: Register = (on) => {
 
     const { Box } = $.ui.resolve(e);
 
-    // The answer takes the row's remaining width rather than its content's, since content that fits itself to the answer's width, as a wide table does, otherwise resizes the answer and itself without end.
+    // Column Boxes give the answer their own width rather than its content's, since content that fits itself to the answer's width, as a wide table does, otherwise resizes the answer and itself without end.
+    // The rail is placed in the answer's padding rather than beside it in a row, because a Box holding core's drawing may carry no size, offset, position, overflow or display.
     return (
-      <Box flexDirection="row" alignItems="stretch" gap="sm">
-        <Box width={RAIL_WIDTH} flexShrink={0} backgroundColor={RAIL_COLOR} />
-        <Box flexDirection="column" flexGrow={1} minWidth={0}>
+      <Box flexDirection="column" paddingLeft={RAIL_WIDTH}>
+        <Box
+          position="absolute"
+          top={0}
+          bottom={0}
+          left={0}
+          width={RAIL_WIDTH}
+          backgroundColor={RAIL_COLOR}
+        />
+        <Box flexDirection="column" paddingLeft="sm">
           {await next(e)}
         </Box>
       </Box>

@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="888" viewBox="0 0 960 888" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="992" viewBox="0 0 960 992" role="img" aria-labelledby="title desc">
   <title id="title">answer-indicator</title>
-  <desc id="desc">A desktop turn with progress notes, collapsed commands, a widget, an image and file changes; only the final answer carries the orange rail.</desc>
+  <desc id="desc">A desktop turn with progress notes, collapsed commands, a widget, an image, a Stop hook that sends Claude back to work, and file changes; only the answers before and after the hook carry the orange rail.</desc>
   <style>text { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Helvetica, Arial, sans-serif; }</style>
-  <rect width="960" height="888" rx="16" fill="#181818"/>
+  <rect width="960" height="992" rx="16" fill="#181818"/>
   <rect x="348.0" y="40.0" width="260.0" height="46.0" rx="16" fill="#242424"/>
   <rect x="364.0" y="58.5" width="210.0" height="9.0" rx="4.5" fill="#4a4a4a"/>
   <rect x="48.0" y="122.0" width="380.0" height="9.0" rx="4.5" fill="#3c3c3c"/>
@@ -27,18 +27,23 @@
   <rect x="62.0" y="682.0" width="502.0" height="9.0" rx="4.5" fill="#575757"/>
   <rect x="62.0" y="706.0" width="260.0" height="9.0" rx="4.5" fill="#575757"/>
   <rect x="43.5" y="651.0" width="2.0" height="70.0" rx="1" fill="#D97757"/>
-  <rect x="48.0" y="742.0" width="560.0" height="106.0" rx="12" fill="#1f1f1f" stroke="#2e2e2e" stroke-width="1"/>
-  <text x="68.0" y="770.0" font-size="14" fill="#efefef" font-weight="600">2 files changed</text>
-  <text x="555.8" y="770.0" font-size="14" fill="#5fb57a" text-anchor="end">+35</text>
-  <text x="588.0" y="770.0" font-size="14" fill="#e5685f" text-anchor="end">−10</text>
-  <line x1="49.0" y1="788.0" x2="607.0" y2="788.0" stroke="#2e2e2e" stroke-width="1" stroke-linecap="round"/>
-  <rect x="68.0" y="799.0" width="150.0" height="9.0" rx="4.5" fill="#3c3c3c"/>
-  <text x="564.5" y="808.0" font-size="13" fill="#5fb57a" text-anchor="end">+24</text>
-  <text x="588.0" y="808.0" font-size="13" fill="#e5685f" text-anchor="end">−7</text>
-  <line x1="49.0" y1="818.0" x2="607.0" y2="818.0" stroke="#2e2e2e" stroke-width="1" stroke-linecap="round"/>
-  <rect x="68.0" y="829.0" width="120.0" height="9.0" rx="4.5" fill="#3c3c3c"/>
-  <text x="563.5" y="838.0" font-size="13" fill="#5fb57a" text-anchor="end">+11</text>
-  <text x="588.0" y="838.0" font-size="13" fill="#e5685f" text-anchor="end">−3</text>
+  <text x="48.0" y="755.0" font-size="15" fill="#9c9c9c">Hook re-prompted Claude</text>
+  <path d="M240.8 748.0 l3.5 2.75 l-3.5 2.75 z" fill="#9c9c9c"/>
+  <rect x="62.0" y="786.0" width="520.0" height="9.0" rx="4.5" fill="#575757"/>
+  <rect x="62.0" y="810.0" width="210.0" height="9.0" rx="4.5" fill="#575757"/>
+  <rect x="43.5" y="779.0" width="2.0" height="46.0" rx="1" fill="#D97757"/>
+  <rect x="48.0" y="846.0" width="560.0" height="106.0" rx="12" fill="#1f1f1f" stroke="#2e2e2e" stroke-width="1"/>
+  <text x="68.0" y="874.0" font-size="14" fill="#efefef" font-weight="600">2 files changed</text>
+  <text x="555.8" y="874.0" font-size="14" fill="#5fb57a" text-anchor="end">+35</text>
+  <text x="588.0" y="874.0" font-size="14" fill="#e5685f" text-anchor="end">−10</text>
+  <line x1="49.0" y1="892.0" x2="607.0" y2="892.0" stroke="#2e2e2e" stroke-width="1" stroke-linecap="round"/>
+  <rect x="68.0" y="903.0" width="150.0" height="9.0" rx="4.5" fill="#3c3c3c"/>
+  <text x="564.5" y="912.0" font-size="13" fill="#5fb57a" text-anchor="end">+24</text>
+  <text x="588.0" y="912.0" font-size="13" fill="#e5685f" text-anchor="end">−7</text>
+  <line x1="49.0" y1="922.0" x2="607.0" y2="922.0" stroke="#2e2e2e" stroke-width="1" stroke-linecap="round"/>
+  <rect x="68.0" y="933.0" width="120.0" height="9.0" rx="4.5" fill="#3c3c3c"/>
+  <text x="563.5" y="942.0" font-size="13" fill="#5fb57a" text-anchor="end">+11</text>
+  <text x="588.0" y="942.0" font-size="13" fill="#e5685f" text-anchor="end">−3</text>
   <path d="M640.0 114.0 H646.0 V628.0 H640.0" fill="none" stroke="#5a5a5a" stroke-width="1" stroke-linejoin="round"/>
   <text x="664.0" y="356.0" font-size="14" fill="#efefef" font-weight="600">Progress notes, commands,</text>
   <text x="664.0" y="376.0" font-size="14" fill="#efefef" font-weight="600">widgets, images</text>
@@ -49,8 +54,13 @@
   <text x="664.0" y="683.0" font-size="14" fill="#D97757" font-weight="600">The final answer</text>
   <text x="664.0" y="703.0" font-size="13" fill="#bdbdbd">Gets the rail, in the color of the thinking</text>
   <text x="664.0" y="722.0" font-size="13" fill="#bdbdbd">dots, past turns included.</text>
-  <path d="M640.0 742.0 H646.0 V848.0 H640.0" fill="none" stroke="#5a5a5a" stroke-width="1" stroke-linejoin="round"/>
-  <text x="664.0" y="790.0" font-size="14" fill="#efefef" font-weight="600">File changes after it</text>
-  <text x="664.0" y="810.0" font-size="13" fill="#bdbdbd">No rail either: only the answer’s text is</text>
-  <text x="664.0" y="829.0" font-size="13" fill="#bdbdbd">marked.</text>
+  <circle cx="622.0" cy="802.0" r="3" fill="#D97757"/>
+  <line x1="622.0" y1="802.0" x2="652.0" y2="802.0" stroke="#D97757" stroke-width="1" stroke-linecap="round"/>
+  <text x="664.0" y="799.0" font-size="14" fill="#D97757" font-weight="600">And the one after a Stop hook</text>
+  <text x="664.0" y="819.0" font-size="13" fill="#bdbdbd">When a hook sends Claude back to work,</text>
+  <text x="664.0" y="838.0" font-size="13" fill="#bdbdbd">the answer it ends with is marked too.</text>
+  <path d="M640.0 846.0 H646.0 V952.0 H640.0" fill="none" stroke="#5a5a5a" stroke-width="1" stroke-linejoin="round"/>
+  <text x="664.0" y="894.0" font-size="14" fill="#efefef" font-weight="600">File changes after it</text>
+  <text x="664.0" y="914.0" font-size="13" fill="#bdbdbd">No rail either: only the answer’s text is</text>
+  <text x="664.0" y="933.0" font-size="13" fill="#bdbdbd">marked.</text>
 </svg>

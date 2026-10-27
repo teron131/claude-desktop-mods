@@ -91,9 +91,8 @@ type Reading = {
   isLinked: boolean;
 };
 
-// The start tells one turn's answers from another's: a turn a Stop hook sends back to work ends in two answers.
 // Usd is undefined for a turn whose spend Total never measured.
-type Turn = Figures & { start: number; usd: number | undefined };
+type Turn = Figures & { usd: number | undefined };
 
 // The app writes a rewind's record several seconds after the new process starts, so a read that finds no record is redone this often, for this long.
 const RELINK_MS = 2_000;
@@ -179,7 +178,6 @@ export const register: Register = (on) => {
       const { cost } = await $.session.usage();
       const answer = e.answer.trim();
       const turn: Turn = {
-        start: (await $.clock.now()) - e.durationMs,
         durationMs: e.durationMs,
         tokens: e.usage === undefined ? undefined : countTokens(e.usage),
         pace: paces.get(e.turnId) ?? NO_PACE,
@@ -304,14 +302,20 @@ function tallyTurns(
     pace: { output: tokens.output, ms: last - (sends.findLast((sent) => sent <= first) ?? first) },
   }));
 
-  // By the id of the response that ended each turn.
-  const turns = new Map<string, Turn>();
+  // A turn can go back to work after an answer, as when a Stop hook blocks, so it ends at the last answer since its start, which alone shows its figures.
+  const ends = new Map<number, { id: string; last: number }>();
   for (const [id, { last, endsTurn }] of responses) {
     const start = starts.findLast((started) => started <= last);
     if (!endsTurn || start === undefined) continue;
+    const latest = ends.get(start);
+    if (latest === undefined || last > latest.last) ends.set(start, { id, last });
+  }
+
+  // By the id of the response that ended each turn.
+  const turns = new Map<string, Turn>();
+  for (const [start, { id, last }] of ends) {
     const inTurn = timed.filter(({ first }) => first >= start && first <= last);
     turns.set(id, {
-      start,
       durationMs: last - start,
       tokens: inTurn.reduce((total, response) => addTokens(total, response.tokens), NO_TOKENS),
       pace: inTurn.reduce((total, response) => addPace(total, response.pace), NO_PACE),
@@ -562,19 +566,12 @@ function addPace(a: Pace, b: Pace): Pace {
   return { output: a.output + b.output, ms: a.ms + b.ms };
 }
 
-// Turns that share a start are one turn a Stop hook sent back to work, and the latest covers the earlier ones, so each counts once.
-function sumTurns(turns: Iterable<Turn>): Figures {
-  const latest = new Map<number, Turn>();
-  for (const turn of turns) {
-    const kept = latest.get(turn.start);
-    if (kept === undefined || turn.durationMs > kept.durationMs) latest.set(turn.start, turn);
-  }
-  const distinct = [...latest.values()];
-  const counted = distinct.flatMap((turn) => turn.tokens ?? []);
+function sumTurns(turns: readonly Turn[]): Figures {
+  const counted = turns.flatMap((turn) => turn.tokens ?? []);
   return {
-    durationMs: distinct.reduce((total, turn) => total + turn.durationMs, 0),
+    durationMs: turns.reduce((total, turn) => total + turn.durationMs, 0),
     tokens: counted.length === 0 ? undefined : counted.reduce(addTokens),
-    pace: distinct.reduce((total, turn) => addPace(total, turn.pace), NO_PACE),
+    pace: turns.reduce((total, turn) => addPace(total, turn.pace), NO_PACE),
   };
 }
 

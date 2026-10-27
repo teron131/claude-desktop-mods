@@ -1,8 +1,8 @@
 # answer-indicator
 
-Draws an orange rail, in the color of the thinking dots, beside each turn's final answer in the Claude desktop app, past turns included, so answers stand out while you scroll. Only the answer's text is marked; progress notes, collapsed commands, widgets, images and the file changes after it are not.
+Draws an orange rail, in the color of the thinking dots, beside each turn's final answer in the Claude desktop app, past turns included, so answers stand out while you scroll. Only the answer's text is marked; progress notes, collapsed commands, widgets, images and the file changes after it are not. When a Stop hook sends Claude back to work after it answered, both that answer and the one the turn ends with are marked.
 
-![A turn with progress notes, collapsed commands, a widget, an image and a file changes card; only the final answer has the orange rail](answer-indicator.svg)
+![A turn with progress notes, collapsed commands, a widget, an image, a Stop hook re-prompt and a file changes card; only the final answer and the one after the hook have the orange rail](answer-indicator.svg)
 
 Works in the Code tab of the Claude desktop app.
 
