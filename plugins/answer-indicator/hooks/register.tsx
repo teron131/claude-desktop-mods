@@ -67,10 +67,13 @@ export const register: Register = (on) => {
 
     const { Box } = $.ui.resolve(e);
 
+    // The answer takes the row's remaining width rather than its content's, since content that fits itself to the answer's width, as a wide table does, otherwise resizes the answer and itself without end.
     return (
       <Box flexDirection="row" alignItems="stretch" gap="sm">
         <Box width={RAIL_WIDTH} flexShrink={0} backgroundColor={RAIL_COLOR} />
-        {await next(e)}
+        <Box flexDirection="column" flexGrow={1} minWidth={0}>
+          {await next(e)}
+        </Box>
       </Box>
     );
   });
