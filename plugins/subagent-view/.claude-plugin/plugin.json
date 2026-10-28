@@ -1,0 +1,6 @@
+{
+  "name": "subagent-view",
+  "version": "0.1.0",
+  "description": "Lists the session's subagents in a pane as a tree, with each one's task, model, effort as sent and type, a bar of its run, and its time, tokens and pace",
+  "types": "./types/index.d.ts"
+}

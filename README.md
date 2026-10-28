@@ -19,6 +19,7 @@ claude plugin install answer-indicator@claude-desktop-mods
 claude plugin install Total@claude-desktop-mods
 claude plugin install retitle@claude-desktop-mods
 claude plugin install subagent-models@claude-desktop-mods
+claude plugin install subagent-view@claude-desktop-mods
 ```
 
 ## Mods
@@ -48,3 +49,9 @@ Lets the main agent name the session and rename it as the work moves on. Works i
 Sets the model and effort of the built-in subagents. Works in the desktop app and the terminal.
 
 ![The mod's settings give Explore Sonnet at high effort and general-purpose Opus at high effort, and an Explore call that names Haiku still runs on Sonnet](plugins/subagent-models/subagent-models.svg)
+
+### [subagent-view](plugins/subagent-view/README.md)
+
+Lists the session's subagents in a pane as a tree, with each one's run, model, effort, time, tokens and pace. Works in the desktop app and the terminal.
+
+![The Subagents pane: summary lines, then a tree of subagents, each with a costumed pixel Claude, a bar, and its model, effort, type and figures](plugins/subagent-view/subagent-view.svg)

@@ -1,6 +1,6 @@
 {
   "name": "claude-desktop-mods",
-  "description": "Claude Code mods: a rail on each final answer, per-turn time, token and cost figures, model-owned session titles, and subagent model defaults",
+  "description": "Claude Code mods: a rail on each final answer, per-turn time, token and cost figures, model-owned session titles, subagent model defaults, and a list of the session's subagents",
   "owner": {
     "name": "teron131"
   },
@@ -8,6 +8,7 @@
     { "name": "answer-indicator", "source": "./plugins/answer-indicator" },
     { "name": "Total", "source": "./plugins/total" },
     { "name": "retitle", "source": "./plugins/retitle" },
-    { "name": "subagent-models", "source": "./plugins/subagent-models" }
+    { "name": "subagent-models", "source": "./plugins/subagent-models" },
+    { "name": "subagent-view", "source": "./plugins/subagent-view" }
   ]
 }
