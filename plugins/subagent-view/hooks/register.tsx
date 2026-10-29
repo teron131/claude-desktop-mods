@@ -32,7 +32,7 @@ const TRACK = "#8080802e";
 const LIST_ROWS = 80;
 // It also refuses one past 262144 characters, Svg markup included, and a costumed Claude runs to thousands, so only the rows nearest the window wear costumes, up to this much markup, and the rest draw Claude plain.
 const COSTUME_BUDGET = 150_000;
-const PLAIN = drawClaude({ name: "Claude", front: "" });
+const PLAIN = drawClaude({ name: "Claude", front: "", legs: [] });
 // The pane's rows the header and each subagent's row take, fixed so the pane's scroll position says exactly which rows are on screen.
 // Both hold their lines and a blank after: on the terminal whole lines, on the desktop lines of the pane's text, where the header's button stands taller than one.
 const HEADER_ROWS = { terminal: 3, drawn: 4 } as const;
