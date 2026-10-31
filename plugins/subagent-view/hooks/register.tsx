@@ -134,21 +134,23 @@ export const register: Register = (on) => {
     const respondedAt = await $.clock.now();
     const { usage } = step;
     const tokens = usage === null ? undefined : countTokens(usage);
+    // A nested background agent that reports through the handback tool gets no turn.complete, so the response calling it ends the row.
+    const handsBack = step.toolUses.some((use) => use.name === "SubagentHandback");
     await update($, subagents, (list) =>
-      list.map((one) =>
-        one.agentId !== e.agentId
-          ? one
-          : {
-              ...one,
-              respondedAt,
-              model: usage?.model ?? sent.model,
-              effort: sent.effort,
-              ...(tokens !== undefined && {
-                tokens: addTokens(one.tokens, tokens),
-                responseMs: one.responseMs + respondedAt - sentAt,
-              }),
-            },
-      ),
+      list.map((one): Subagent => {
+        if (one.agentId !== e.agentId) return one;
+        const responded = {
+          ...one,
+          respondedAt,
+          model: usage?.model ?? sent.model,
+          effort: sent.effort,
+          ...(tokens !== undefined && {
+            tokens: addTokens(one.tokens, tokens),
+            responseMs: one.responseMs + respondedAt - sentAt,
+          }),
+        };
+        return handsBack ? { ...responded, status: "done", endedAt: respondedAt } : responded;
+      }),
     );
     return step;
   });
