@@ -14,13 +14,15 @@ On macOS, `Total` also makes sure the session you click on opens at once. The ap
 
 So `Total` ends the process of a session you've clicked away from, and only if nothing is running in it: no turn, background task, subagent or Remote Control. Nothing is lost: the session stays in your sidebar and reopens from its transcript in a second or two. Clicking through 6 sessions past the limit, one every 5 seconds, all 18 opened at once.
 
+The app never pauses a session on Remote Control, so with "Connect new sessions to Remote Control" on, those alone fill it, and every other session you open, a scheduled task's run included, shows without a process and without any mod. So while the app is full, `Total` also ends the process of the Remote Control session that has gone longest without a turn, once that's 15 minutes, unless it's open on your Mac or phone or has work running. That session can't be reached from your phone until you open it on your Mac again.
+
 **Limitation:** the app treats a process that ends within 30 seconds of starting as a crash, and after 15 it stops reopening that session until you send it a message. So `Total` ends a young process at most 10 times per session per app run; after that it waits until the process is 35 seconds old, and clicking through more sessions than the limit faster than about every 40 seconds can leave one waiting until your next visit.
 
 ## What it reads, writes and runs
 
 - It reads the transcripts Claude Code keeps under `~/.claude/projects` and the desktop app's session records with Claude Code's built-in ripgrep, so nothing needs installing; on Windows, PowerShell finds Claude Code's binary for it.
 - It saves each turn's cost in `~/.claude/total-costs`, one small file per transcript.
-- On macOS, to free a session's process, it counts Claude Code processes with `ps`, reads the machine's memory size with `sysctl`, asks the desktop app whether the session is running or reachable through Remote Control, and ends that session's own Claude Code process with `kill -TERM`. Two small files in `~/.claude`, `total-released` and `total-young-releases`, keep sessions from releasing more than one process at a time or more than the crash limit allows.
+- On macOS, to free a session's process, it counts Claude Code processes with `ps`, reads the machine's memory size with `sysctl`, asks the desktop app whether the session is running or reachable through Remote Control and when each session last had a turn, and ends that session's own Claude Code process with `kill -TERM`. Two small files in `~/.claude`, `total-released` and `total-young-releases`, keep sessions from releasing more than one process at a time or more than the crash limit allows.
 - It sends nothing off your machine.
 
 ## Install
