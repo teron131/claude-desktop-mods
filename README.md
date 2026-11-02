@@ -46,9 +46,9 @@ Lets the main agent name the session and rename it as the work moves on. Works i
 
 ### [subagent-models](plugins/subagent-models/README.md)
 
-Sets the model and effort of the built-in subagents. Works in the desktop app and the terminal.
+Sets the default model and effort of the built-in subagents. Works in the desktop app and the terminal.
 
-![The mod's settings give Explore Sonnet at high effort and general-purpose Opus at high effort, and an Explore call that names Haiku still runs on Sonnet](plugins/subagent-models/subagent-models.svg)
+![The mod's settings give Explore Sonnet at high effort and general-purpose Opus at high effort, and an Explore call that names Haiku runs on Haiku at the configured effort](plugins/subagent-models/subagent-models.svg)
 
 ### [subagent-view](plugins/subagent-view/README.md)
 
