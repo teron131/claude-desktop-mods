@@ -10,6 +10,7 @@ export const GOLDDD = "#8E6418";
 export const GOLDL = "#F7DE7A";
 export const BELT = "#5A3A22";
 export const IGOLDD = "#C4921C";
+export const SHIRT = "#F2EEE6";
 
 export const twinkle = (x: number, y: number, s: number, fill: string) =>
   `<path d="M${x} ${y - s}Q${x + s * 0.18} ${y - s * 0.18} ${x + s} ${y}Q${x + s * 0.18} ${y + s * 0.18} ${x} ${y + s}Q${x - s * 0.18} ${y + s * 0.18} ${x - s} ${y}Q${x - s * 0.18} ${y - s * 0.18} ${x} ${y - s}Z" fill="${fill}"/>`;

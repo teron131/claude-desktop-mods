@@ -10,6 +10,8 @@ export type Costume = {
   // Clothing down Claude's four legs in bands from the hip, such as trousers over boots, whose heights add up to the legs' 6, or false for no legs, as the genie rises from its lamp on smoke.
   // The legs stand on the pane itself, so a band meant as black takes a lifted charcoal that still shows on a dark pane.
   legs: [fill: string, height: number][] | false;
+  // Degrees the whole drawing, Claude and costume alike, turns clockwise about its middle, as Claude leans with a prop it stands on.
+  tilt?: number;
 };
 
 export const INK = "#1F1E1D";
@@ -17,7 +19,7 @@ export const INK = "#1F1E1D";
 const LEGS_TOP = 54;
 // Claude stays orange whatever a subagent's status, which the pane's bar shows instead, so a costume's own reds never read as a failure.
 // It is hex since the desktop draws an Svg as an image outside the app's theme.
-const BODY = "#D97757";
+export const BODY = "#D97757";
 
 // The welcome screen's ▐▛███▜▌ / ▝▜█████▛▘ / ▘▘ ▝▝ at quarter-cell resolution; a terminal cell is about twice as tall as wide, so each quarter block is 3 wide and 6 tall.
 export const silhouette = (dx = 0) =>
@@ -37,10 +39,17 @@ export const silhouette = (dx = 0) =>
 export const r = (x: number, y: number, w: number, h: number, fill: string, extra = "") =>
   `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" ${extra}/>`;
 
-export function drawClaude({ back = "", front, legs }: Costume): string {
+export function drawClaude({ back = "", front, legs, tilt }: Costume): string {
   const blocks = silhouette().filter(([, y]) => legs !== false || y < LEGS_TOP);
   const clothes = legs === false ? "" : dressLegs(legs);
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 70">${back}<g shape-rendering="crispEdges">${blocks.map(([x, y, w, h]) => r(x, y, w, h, BODY)).join("")}${r(24, 36, 3, 6, INK)}${r(45, 36, 3, 6, INK)}</g>${clothes}${front}</svg>`;
+  const eyes = `${r(24, 36, 3, 6, INK)}${r(45, 36, 3, 6, INK)}`;
+  // Tilted, the blocks become one smooth path: as separate blocks off the pixel grid they would open seams between them, and crisp edges would stair-step.
+  const body =
+    tilt === undefined
+      ? `<g shape-rendering="crispEdges">${blocks.map(([x, y, w, h]) => r(x, y, w, h, BODY)).join("")}${eyes}</g>`
+      : `<path d="${blocks.map(([x, y, w, h]) => `M${x} ${y}h${w}v${h}h${-w}Z`).join("")}" fill="${BODY}"/>${eyes}`;
+  const drawing = `${back}${body}${clothes}${front}`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 70">${tilt === undefined ? drawing : `<g transform="rotate(${tilt} 36 35)">${drawing}</g>`}</svg>`;
 }
 
 function dressLegs(bands: [fill: string, height: number][]): string {

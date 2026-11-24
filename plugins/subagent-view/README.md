@@ -4,7 +4,7 @@ Lists a session's subagents in a pane as a tree. Each row has the task, a bar fo
 
 ![The Subagents pane: summary lines, then a tree of subagents, each with a costumed pixel Claude, a bar, and its model, effort, type and figures](subagent-view.svg)
 
-- **A costume each:** in the desktop app each row's pixel Claude wears one of nine costumes, dealt so neighboring rows look apart, and a row keeps its costume. The terminal shows ●, ✓ or ✗ instead.
+- **A costume each:** in the desktop app each row's pixel Claude wears one of thirteen costumes, dealt so neighboring rows look apart, and a row keeps its costume. The terminal shows ●, ✓ or ✗ instead.
 - **Status in the bar:** orange while running, gray once done, red if the subagent failed or was stopped.
 - **A clock for what's on screen:** the bars zoom to the rows in view, so they fill the width as you scroll. Runs side by side line up, and idle stretches shrink to a small gap.
 - **Figures:** counted as `Total` counts a turn: time, tokens in with the cache's share, tokens out and tokens a second. The summary adds them up, counting runs side by side once. Cost is left out, since Claude Code reports it only for the whole session, where `Total` shows it.
@@ -13,7 +13,7 @@ Lists a session's subagents in a pane as a tree. Each row has the task, a bar fo
 - **The whole session:** subagents from before the mod loaded or before a rewind are read from Claude Code's transcripts.
 - **Opening it:** the **Subagents** button under each Agent call in the desktop app, or `/subagents` anywhere.
 
-![The nine costumes, from left: Captain Anthropic, Doctor Strange, the Genie, Infinity Ultron, Odin, Quicksilver, the Scarlet Witch, Thanos and Vision](costumes.svg)
+![The thirteen costumes, from left: Captain Anthropic, Clauddy, Doctor Strange, Einstein, the Genie, Infinity Ultron, Odin, Oppenheimer, Quicksilver, Riemann, the Scarlet Witch, Thanos and Vision](costumes.svg)
 
 Works in the Claude desktop app and the terminal, which draws the bars as text.
 
